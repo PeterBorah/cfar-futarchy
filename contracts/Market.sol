@@ -7,17 +7,39 @@ contract Market {
   uint[] public sellAmounts;
   uint[] public sellPrices;
   address[] public sellOriginators;
+  mapping(address => uint) public collateral;
 
   function buy(uint amount, uint price) payable {
+    if (amount * price != msg.value) { throw; }
+
+    collateral[msg.sender] += msg.value;
+
     uint index = _getBuyIndex(price);
     _addBuyPriceAtIndex(index, price);
     _addBuyAmountAtIndex(index, amount);
     _addBuyOriginatorAtIndex(index, msg.sender);
   }
 
+  function sell(uint amount, uint price) payable {
+    if (amount * (100 - price) != msg.value) { throw; }
+    
+    collateral[msg.sender] += msg.value;
+
+    uint index = _getSellIndex(price);
+    _addSellPriceAtIndex(index, price);
+    _addSellAmountAtIndex(index, amount);
+    _addSellOriginatorAtIndex(index, msg.sender);
+  }
+
   function allBuyOrders() returns(uint[], uint[], address[]) {
     return (buyAmounts, buyPrices, buyOriginators);
   }
+
+  function allSellOrders() returns(uint[], uint[], address[]) {
+    return (sellAmounts, sellPrices, sellOriginators);
+  }
+
+  // Private functions
 
   function _getBuyIndex(uint price) private returns(uint) {
     uint i = 0;
@@ -56,17 +78,6 @@ contract Market {
     }
 
     buyOriginators[index] = originator;
-  }
-
-  function sell(uint amount, uint price) payable {
-    uint index = _getSellIndex(price);
-    _addSellPriceAtIndex(index, price);
-    _addSellAmountAtIndex(index, amount);
-    _addSellOriginatorAtIndex(index, msg.sender);
-  }
-
-  function allSellOrders() returns(uint[], uint[], address[]) {
-    return (sellAmounts, sellPrices, sellOriginators);
   }
 
   function _getSellIndex(uint price) private returns(uint) {
