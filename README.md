@@ -77,5 +77,13 @@ While blockchain voting platforms are areas for potential innovation, there curr
 #### Prediction market architecture
 #### System architecture 
 #### Contract architecture
+
+There are four contracts that are in use in the system. The first contract is a Decentralized Autonomous Orgnaization that allows users to create proposals get information about the active proposals. 
+
+Proposal is the second type of contract that we have which takes in a proposal description and creates two prediction markets; each one to predict the value of the utility function after a set amount of time if the proposal is implemented or not. After teh amount of time is over the user triggers a check on the average price of the each of the markets and opts to implement the proposal if the positive prediction market has a higher average price than the negative one. In all other cases the policy is not implemented. 
+
+The proposal contract triggers two market contracts. This is the contract that holds the prediction market and accepts buys and sells of shares in the market. It is also responsible for paying out the investors in the market.
+
+The last type of contract is the oracle contract which allows users to update the utility function and gives this value to the market contract when requested.
 ### Rationalist use case
 
