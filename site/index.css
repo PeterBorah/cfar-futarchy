@@ -1,0 +1,42 @@
+/* run through an automatic polyfiller if you care about people who insist on using inferior browsers getting the full experience */
+
+body {
+	display: flex;
+	font-family: monospace;
+	margin: 0;
+	min-height: 100vh;
+}
+
+.tab {
+	border-color: #000;
+	border-radius: 2em;
+	border-style: solid;
+	border-width: 2px;
+	cursor: pointer;
+	margin: 1em;
+	padding: 1em;
+	user-select: none; /* spotty support as of 2017-5 */
+}
+
+.tab:active {
+	background-color: #00f;
+	color: #fff;
+}
+
+.tab:hover {
+	border-color: #00f;
+}	
+
+#tabs {
+	border-color: #000;
+	border-style: none solid none none;
+	width: 24em;
+}
+
+#current-tab {
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	padding: 2em;
+}
+
