@@ -68,7 +68,7 @@ As values are inarguably abstract and subjective, a political futarchy wants of 
 Both constituents and outsiders can have a chance to participate in the prediction markets as many times as they want, since it is only a matter of "betting on beliefs", providing information on probabilities of outcomes *measured against an already-determined utility function*.  
 But only constituents should get a vote, *and each an equal vote*, on the utility function which will determine the proposals that affect their everyday lives.
 
-Public blockchains are characteristically decentralized and permisionless, preventing an ability to register and restrict user permission to a particular set of "identities" (consensus specifics include safeguards against DDoS and sybil attacks).  
+Public blockchains are characteristically decentralized and permissionless, preventing an ability to register and restrict user permission to a particular set of "identities" (consensus specifics include safeguards against DDoS and sybil attacks).  
 While blockchain voting platforms are areas for potential innovation, there currently seems to be little value in putting a small democracy on a permissioned blockchain, as most of the blockchain's essence will have been stripped.
 
 
