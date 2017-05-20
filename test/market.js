@@ -67,6 +67,30 @@ contract('Market', function(accounts) {
       then(assert.fail, function(){});
   });
 
+  xit("should let buys match existing sell orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.sell(10, 50, {value: 500}) }).
+      then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.balanceOf(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      }).
+      then(function() { return market.balanceOf(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      });
+  });
+
   it("should allow new sell orders", function() {
     var market;
 

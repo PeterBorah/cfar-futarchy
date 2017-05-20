@@ -39,6 +39,9 @@ contract Market {
     return (sellAmounts, sellPrices, sellOriginators);
   }
 
+  function cancel() {}
+  function avgPrice() {}
+
   // Private functions
 
   function _getBuyIndex(uint price) private returns(uint) {
