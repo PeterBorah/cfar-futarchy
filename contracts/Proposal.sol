@@ -7,7 +7,7 @@ contract Proposal {
     string desc;
     function Proposal(string description) {
         desc = description; 
-        marketFactory fact = new marketFactory();cd 
+        marketFactory fact = new marketFactory();
         posMarket = fact.createMarket();
         negMarket = fact.createMarket();
     }
@@ -19,10 +19,10 @@ contract Proposal {
     }
 
     function checkAvgPrice(){
-        if (Market(posMarket).avgPrice() > Market(negMarket).avgPrice()){
-            Market(negMarket).cancel();
+        if (Market(posMarket).avgPrice() > (Market(negMarket).avgPrice())){
+            (Market(negMarket).cancel());
         } else {
-            Market(posMarket).cancel();
+            (Market(posMarket).cancel());
         }
     }
 
