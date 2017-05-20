@@ -26,9 +26,9 @@ contract('Oracle',function(accounts){
 
     it("should return false if utility is greater than 100", function() {
         var dao;
-        return oracle.new(20).then(function(instance){ dao = instance}). 
+        return oracle.new(20).then(function(instance){ dao = instance}).
         then(function() {return dao.updateUtility(120)}).
-        then(function() {return dao.getUtility.call()}). 
+        then(function() {return dao.getUtility.call()}).
         then(function(result) {
             console.log(result);
             assert.equal(result, 20);

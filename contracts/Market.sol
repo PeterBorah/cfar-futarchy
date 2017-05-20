@@ -9,11 +9,26 @@ contract Market {
   address[] public sellOriginators;
   mapping(address => uint) public collateral;
   mapping(address => int) public balance;
+  uint public startTime;
+  uint lastDayCumulative;
+  uint lastDayVolume;
+  address public proposal;
+  bool public canceled;
+
+  function Market() {
+    startTime = block.timestamp;
+    proposal = msg.sender;
+  }
+
+  function isOpen() returns(bool) {
+    return startTime + 14 days > block.timestamp;
+  }
 
   function buy(uint amount, uint price) payable {
     uint matchedAmount;
 
     if (amount * price != msg.value) { throw; }
+    if (!isOpen()) { throw; }
 
     collateral[msg.sender] += msg.value;
 
@@ -34,6 +49,11 @@ contract Market {
 
       balance[msg.sender] += int(matchedAmount);
       balance[sellOriginator] -= int(matchedAmount);
+
+      if (startTime + 13 days < block.timestamp) {
+        lastDayVolume += matchedAmount;
+        lastDayCumulative += matchedAmount * price;
+      }
     }
 
     if (amount > 0) {
@@ -48,6 +68,7 @@ contract Market {
     uint matchedAmount;
 
     if (amount * (100 - price) != msg.value) { throw; }
+    if (!isOpen()) { throw; }
     
     collateral[msg.sender] += msg.value;
 
@@ -64,6 +85,11 @@ contract Market {
         buyPrices.length--;
         buyAmounts.length--;
         buyOriginators.length--;
+      }
+
+      if (startTime + 13 days < block.timestamp) {
+        lastDayVolume += matchedAmount;
+        lastDayCumulative += matchedAmount * price;
       }
 
       balance[msg.sender] -= int(matchedAmount);
@@ -86,8 +112,18 @@ contract Market {
     return (sellAmounts, sellPrices, sellOriginators);
   }
 
-  function cancel() {}
-  function avgPrice() returns(uint) {}
+  function cancel() {
+    if (msg.sender != proposal) { throw; }
+    if (isOpen()) { throw; }
+
+    canceled = true;
+  }
+
+  function avgPrice() returns(uint) {
+    if (isOpen()) { throw;}
+
+    return lastDayCumulative/lastDayVolume;
+  }
 
   // Private functions
 

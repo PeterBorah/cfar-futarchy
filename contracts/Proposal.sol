@@ -1,15 +1,13 @@
 pragma solidity ^0.4.8;
 import "./Market.sol";
-import "./marketFactory.sol";
 contract Proposal {
     address posMarket;
     address negMarket;
     string desc;
     function Proposal(string description) {
         desc = description; 
-        marketFactory fact = new marketFactory();
-        posMarket = fact.createMarket();
-        negMarket = fact.createMarket();
+        posMarket = new Market();
+        negMarket = new Market();
     }
     function getposMarket() returns (address){
         return posMarket;
@@ -19,10 +17,10 @@ contract Proposal {
     }
 
     function checkAvgPrice(){
-        if (Market(posMarket).avgPrice() > Market(negMarket).avgPrice()){
-            Market(negMarket).cancel();
+        if (Market(posMarket).avgPrice() > (Market(negMarket).avgPrice())){
+            (Market(negMarket).cancel());
         } else {
-            Market(posMarket).cancel();
+            (Market(posMarket).cancel());
         }
     }
 

@@ -41,7 +41,7 @@ Your trust lies entirely in the code, which is typically open source in order fo
 
 Hanson's Hand is built on Ethereum, a popular cryptocurrency system like Bitcoin, as well as a platform for developing decentralized applications via writing and running smart contracts.  
 Blockchain-based smart contracts are pieces of software that encode, allow users to interact with, and enforce programmatic rules regarding assets and data within a given blockchain.  
-They are written in Ethereum's built-in programming language, whose Turing-completness allows smart contracts to perform any computation — which Bitcoin scripting lacks.  
+They are written in Ethereum's built-in programming language, whose Turing-completeness allows smart contracts to perform any computation — which Bitcoin scripting lacks.  
 As you may see, the creation and facilitation of prediction markets can easily be mapped onto Ethereum smart contracts.
 
 
@@ -68,7 +68,7 @@ As values are inarguably abstract and subjective, a political futarchy wants of 
 Both constituents and outsiders can have a chance to participate in the prediction markets as many times as they want, since it is only a matter of "betting on beliefs", providing information on probabilities of outcomes *measured against an already-determined utility function*.  
 But only constituents should get a vote, *and each an equal vote*, on the utility function which will determine the proposals that affect their everyday lives.
 
-Public blockchains are characteristically decentralized and permisionless, preventing an ability to register and restrict user permission to a particular set of "identities" (consensus specifics include safeguards against DDoS and sybil attacks).  
+Public blockchains are characteristically decentralized and permissionless, preventing an ability to register and restrict user permission to a particular set of "identities" (consensus specifics include safeguards against DDoS and sybil attacks).  
 While blockchain voting platforms are areas for potential innovation, there currently seems to be little value in putting a small democracy on a permissioned blockchain, as most of the blockchain's essence will have been stripped.
 
 
