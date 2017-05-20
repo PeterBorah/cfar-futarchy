@@ -1,0 +1,12 @@
+{
+    "name": "cfar-futarchy",
+    "version": "0.1.0",
+    "description": "Futarchy dapp for CFAR hackathon",
+    "dependencies": {
+        "@digix/tempo": "^0.0.3"
+    },
+    "license": "UNLICENSED",
+    "repository": {
+        "url": "https://github.com/peterborah/cfar-futarchy.git"
+    }
+}
