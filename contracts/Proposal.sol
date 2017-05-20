@@ -7,7 +7,7 @@ contract Proposal {
     string desc;
     function Proposal(string description) {
         desc = description; 
-        marketFactory fact = new marketFactory();
+        marketFactory fact = new marketFactory();cd 
         posMarket = fact.createMarket();
         negMarket = fact.createMarket();
     }
