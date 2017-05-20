@@ -1,0 +1,127 @@
+{
+  "contract_name": "CentralizedOracle",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "outcome",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_outcome",
+          "type": "int256"
+        }
+      ],
+      "name": "setOutcome",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getOutcome",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "descriptionHash",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "replaceOwner",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isOutcomeSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_descriptionHash",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000c57fe5b6040516040806102d88339810160405280516020909101515b8015156100325760006000fd5b60008054600160a060020a031916600160a060020a03841617905560018190555b50505b610273806100656000396000f300606060405236156100725763ffffffff60e060020a60003504166327793f878114610074578063717a195a146100965780637e7e4b47146100ab57806385dcee93146100cd5780638da5cb5b146100ef578063a39a45b71461011b578063c65fb38014610139578063ccdf68f31461015d575bfe5b341561007c57fe5b610084610181565b60408051918252519081900360200190f35b341561009e57fe5b6100a9600435610187565b005b34156100b357fe5b6100846101cb565b60408051918252519081900360200190f35b34156100d557fe5b6100846101d2565b60408051918252519081900360200190f35b34156100f757fe5b6100ff6101d8565b60408051600160a060020a039092168252519081900360200190f35b341561012357fe5b6100a9600160a060020a03600435166101e7565b005b341561014157fe5b610149610234565b604080519115158252519081900360200190f35b341561016557fe5b61014961023d565b604080519115158252519081900360200190f35b60035481565b60005433600160a060020a039081169116146101a35760006000fd5b60025460ff16156101b45760006000fd5b6002805460ff1916600117905560038190555b5b50565b6003545b90565b60015481565b600054600160a060020a031681565b60005433600160a060020a039081169116146102035760006000fd5b60025460ff16156102145760006000fd5b60008054600160a060020a031916600160a060020a0383161790555b5b50565b60025460ff1681565b60025460ff165b905600a165627a7a7230582059592600732b4f28fbf8dd2caaf9362c0938e6e7be5b0f148da25b0d4399f2380029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1495260269286
+}
