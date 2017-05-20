@@ -12,9 +12,12 @@ contract Market {
   uint public startTime;
   uint lastDayCumulative;
   uint lastDayVolume;
+  address public proposal;
+  bool public canceled;
 
   function Market() {
     startTime = block.timestamp;
+    proposal = msg.sender;
   }
 
   function isOpen() returns(bool) {
@@ -109,7 +112,12 @@ contract Market {
     return (sellAmounts, sellPrices, sellOriginators);
   }
 
-  function cancel() {}
+  function cancel() {
+    if (msg.sender != proposal) { throw; }
+    if (isOpen()) { throw; }
+
+    canceled = true;
+  }
 
   function avgPrice() returns(uint) {
     if (isOpen()) { throw;}
