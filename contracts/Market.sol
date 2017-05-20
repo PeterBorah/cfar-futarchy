@@ -39,8 +39,8 @@ contract Market {
     return (sellAmounts, sellPrices, sellOriginators);
   }
 
-  function cancel() {}
-  function avgPrice() {}
+  function cancel() returns(bool) {}
+  function avgPrice() returns(uint) {}
 
   // Private functions
 
