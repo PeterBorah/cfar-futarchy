@@ -87,3 +87,14 @@ The proposal contract triggers two market contracts. This is the contract that h
 The last type of contract is the oracle contract which allows users to update the utility function and gives this value to the market contract when requested.
 ### Rationalist use case
 
+The (Capital-R) Rationalist community and futarchy present each other with relatively unique opportunities.	 
+For the Rationalist community, futarchy provides a new possibility for experiments in governance that are closely aligned with Rationalist ideals of objectivity and theoretical elegance.  
+For futarchy, the Rationalist community may be the most philosophically aligned group that is not typically known for expertise surrounding blockchain technologies, making them valuable prospects for early adoption and refinement for broader demographics going forward.
+
+Potential applications include:
+*	Cohousing - Cohousing is particularly popular among the Rationalist community, and futarchies could be used towards the maximization of resident wellbeing, including minimization of living costs, maximization of incomes, and improvements at accounting for positive and negative externalities created among housemates.
+*	Coboating - An analogue to cohousing that offers a more complex set of tradeoffs to take into account. In this case a futarchy could additionally be applied to issues such as evaluating migration plans, weighing preferences for how a group of boats can arrange into a collective raft, and acquisition of additional seaworthy vessels for a private fleet.
+*	Charity - Any form of charity with reasonably objective metrics of success could be optimized using futarchy to decide on policies which do more to drive those metrics. This promises to have significant appeal to the Effective Altruism community which has significant overlap with the Rationalist community.
+* Leveraging existing resources - A significant portion of the Rationalist community consists of highly-ambitious people willing to take part in extremely experimental ventures for the sake of having a major impact on the world. Futarchy among other methods bears notable promise as one such experiment that is quickly becoming feasible. 
+*	Community Management - While the Rationalist community has successfully cultivated many meetups and group houses, a large portion of the community still expresses a lack for a more comprehensive social environment, especially concerning interaction online and surrounding special events. Futarchy is a potential means of optimizing the liveliness of those functions within the Rationalist community, including assessment and implementation of financial incentives where they stand to aid community organization and development of socially shared resources.
+
