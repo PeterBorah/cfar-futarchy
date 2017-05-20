@@ -41,7 +41,7 @@ Your trust lies entirely in the code, which is typically open source in order fo
 
 Hanson's Hand is built on Ethereum, a popular cryptocurrency system like Bitcoin, as well as a platform for developing decentralized applications via writing and running smart contracts.  
 Blockchain-based smart contracts are pieces of software that encode, allow users to interact with, and enforce programmatic rules regarding assets and data within a given blockchain.  
-They are written in Ethereum's built-in programming language, whose Turing-completness allows smart contracts to perform any computation — which Bitcoin scripting lacks.  
+They are written in Ethereum's built-in programming language, whose Turing-completeness allows smart contracts to perform any computation — which Bitcoin scripting lacks.  
 As you may see, the creation and facilitation of prediction markets can easily be mapped onto Ethereum smart contracts.
 
 
