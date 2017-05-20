@@ -8,27 +8,74 @@ contract Market {
   uint[] public sellPrices;
   address[] public sellOriginators;
   mapping(address => uint) public collateral;
+  mapping(address => int) public balance;
 
   function buy(uint amount, uint price) payable {
+    uint matchedAmount;
+
     if (amount * price != msg.value) { throw; }
 
     collateral[msg.sender] += msg.value;
 
-    uint index = _getBuyIndex(price);
-    _addBuyPriceAtIndex(index, price);
-    _addBuyAmountAtIndex(index, amount);
-    _addBuyOriginatorAtIndex(index, msg.sender);
+    while (amount != 0 && sellPrices.length != 0 && price >= sellPrices[sellPrices.length - 1]) {
+      uint sellAmount = sellAmounts[sellAmounts.length - 1];
+      address sellOriginator = sellOriginators[sellOriginators.length - 1];
+      if (sellAmount > amount) {
+        matchedAmount = amount;
+        sellAmounts[sellAmounts.length - 1] -= amount;
+        amount = 0;
+      } else {
+        matchedAmount = sellAmount;
+        amount -= matchedAmount;
+        sellPrices.length--;
+        sellAmounts.length--;
+        sellOriginators.length--;
+      }
+
+      balance[msg.sender] += int(matchedAmount);
+      balance[sellOriginator] -= int(matchedAmount);
+    }
+
+    if (amount > 0) {
+      uint index = _getBuyIndex(price);
+      _addBuyPriceAtIndex(index, price);
+      _addBuyAmountAtIndex(index, amount);
+      _addBuyOriginatorAtIndex(index, msg.sender);
+    }
   }
 
   function sell(uint amount, uint price) payable {
+    uint matchedAmount;
+
     if (amount * (100 - price) != msg.value) { throw; }
     
     collateral[msg.sender] += msg.value;
 
-    uint index = _getSellIndex(price);
-    _addSellPriceAtIndex(index, price);
-    _addSellAmountAtIndex(index, amount);
-    _addSellOriginatorAtIndex(index, msg.sender);
+    while (amount != 0 && buyPrices.length != 0 && price <= buyPrices[buyPrices.length - 1]) {
+      uint buyAmount = buyAmounts[buyAmounts.length - 1];
+      address buyOriginator = buyOriginators[buyOriginators.length - 1];
+      if (buyAmount > amount) {
+        matchedAmount = amount;
+        buyAmounts[buyAmounts.length - 1] -= amount;
+        amount = 0;
+      } else {
+        matchedAmount = buyAmount;
+        amount -= matchedAmount;
+        buyPrices.length--;
+        buyAmounts.length--;
+        buyOriginators.length--;
+      }
+
+      balance[msg.sender] -= int(matchedAmount);
+      balance[buyOriginator] += int(matchedAmount);
+    }
+
+    if (amount > 0) {
+      uint index = _getSellIndex(price);
+      _addSellPriceAtIndex(index, price);
+      _addSellAmountAtIndex(index, amount);
+      _addSellOriginatorAtIndex(index, msg.sender);
+    }
   }
 
   function allBuyOrders() returns(uint[], uint[], address[]) {
@@ -39,7 +86,7 @@ contract Market {
     return (sellAmounts, sellPrices, sellOriginators);
   }
 
-  function cancel() returns(bool) {}
+  function cancel() {}
   function avgPrice() returns(uint) {}
 
   // Private functions
