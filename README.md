@@ -1,6 +1,6 @@
 # Hanson's Hand
 
-Peter Borah, Nihar Dalal, Jeffrey Bergen Petersen, Alexandra Tran
+Peter Borah, Nihar Dalal, Jeff Bergen, Alexandra [redacted] Tran
 
 CFAR HackDay May 2017
 
