@@ -1,0 +1,53 @@
+{
+  "contract_name": "oracle",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getUtility",
+      "outputs": [
+        {
+          "name": "utility",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "initUtility",
+          "type": "uint256"
+        }
+      ],
+      "name": "Oracle",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newUtility",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateUtility",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b610102806100196000396000f300606060405263ffffffff60e060020a60003504166317261007811460365780635cdad3a6146052578063d7850fee146061575b6000565b3460005760406082565b60408051918252519081900360200190f35b34600057605f6004356088565b005b34600057606e60043560ad565b604080519115158252519081900360200190f35b60005b90565b606481118060965750600081105b1560a357606460005560a9565b60008190555b5b50565b6000606482118060bd5750600082105b1560c85750600060d1565b50600081905560015b9190505600a165627a7a723058207b504fa8aa94b5a582202f21a92f878bab0f072cf71ca008d800fb03148a2e850029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1495312351990
+}
