@@ -28,6 +28,8 @@ contract('Market', function(accounts) {
       then(function() { return market.buy(10, 95, {value: 950}) }).
       then(function() { return market.buy(10, 90, {value: 900}) }).
       then(function() { return market.buy(10, 96, {value: 960}) }).
+
+
       then(function() { return market.allBuyOrders.call() }).
       then(function(result) {
         assert.equal(result.length, 3);
@@ -67,7 +69,7 @@ contract('Market', function(accounts) {
       then(assert.fail, function(){});
   });
 
-  xit("should let buys match existing sell orders", function() {
+  it("should let buys match existing sell orders", function() {
     var market;
 
     return Market.new().then(function(instance) { market = instance }).
@@ -81,13 +83,90 @@ contract('Market', function(accounts) {
       then(function(result) {
         assert.equal(result[0].length, 0);
       }).
-      then(function() { return market.balanceOf(accounts[0]) }).
+      then(function() { return market.balance(accounts[0]) }).
       then(function(result) {
         assert.equal(result, -10);
       }).
-      then(function() { return market.balanceOf(accounts[1]) }).
+      then(function() { return market.balance(accounts[1]) }).
       then(function(result) {
         assert.equal(result, 10);
+      });
+  });
+
+  it("should let buys match part of an existing sell order", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.sell(100, 50, {value: 5000}) }).
+      then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[0][0], 90);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      });
+  });
+
+  it("should let buys match multiple existing sell orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.sell(5, 49, {value: 255}) }).
+      then(function() { return market.sell(5, 50, {value: 250}) }).
+      then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      });
+  });
+
+  it("should let buys that don't fully match become partial limit orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.sell(5, 49, {value: 255}) }).
+      then(function() { return market.sell(5, 51, {value: 245}) }).
+      then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[1][0], 51);
+      }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[0][0], 5);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, -5);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, 5);
       });
   });
 
@@ -114,10 +193,10 @@ contract('Market', function(accounts) {
     var market;
 
     return Market.new().then(function(instance) { market = instance }).
-      then(function() { return market.sell(10, 36, {value: 640}) }).
-      then(function() { return market.sell(10, 39, {value: 610}) }).
-      then(function() { return market.sell(10, 30, {value: 700}) }).
       then(function() { return market.sell(10, 35, {value: 650}) }).
+      then(function() { return market.sell(10, 30, {value: 700}) }).
+      then(function() { return market.sell(10, 39, {value: 610}) }).
+      then(function() { return market.sell(10, 36, {value: 640}) }).
       then(function() { return market.allSellOrders.call() }).
       then(function(result) {
         assert.equal(result.length, 3);
@@ -154,6 +233,107 @@ contract('Market', function(accounts) {
       then(function() { return market.collateral.call(accounts[0]) }).
       then(function(result) {
         assert.equal(result, 1850);
+      });
+  });
+
+  it("should let sells match existing buy orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.buy(10, 50, {value: 500}) }).
+      then(function() { return market.sell(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      });
+  });
+
+  it("should let buys match part of an existing sell order", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.buy(100, 50, {value: 5000}) }).
+      then(function() { return market.sell(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[0][0], 90);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      });
+  });
+
+  it("should let buys match multiple existing sell orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.buy(5, 51, {value: 255}) }).
+      then(function() { return market.buy(5, 50, {value: 250}) }).
+      then(function() { return market.sell(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.allSellOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 0);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, 10);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, -10);
+      });
+  });
+
+  it("should let buys that don't fully match become partial limit orders", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.buy(5, 49, {value: 245}) }).
+      then(function() { return market.buy(5, 51, {value: 255}) }).
+      then(function() { return market.sell(10, 50, {value: 500, from: accounts[1]}) }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[1][0], 49);
+      }).
+      then(function() { return market.allBuyOrders.call() }).
+      then(function(result) {
+        assert.equal(result[0].length, 1);
+        assert.equal(result[0][0], 5);
+      }).
+      then(function() { return market.balance(accounts[0]) }).
+      then(function(result) {
+        assert.equal(result, 5);
+      }).
+      then(function() { return market.balance(accounts[1]) }).
+      then(function(result) {
+        assert.equal(result, -5);
       });
   });
 });
