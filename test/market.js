@@ -1,6 +1,54 @@
 var Market = artifacts.require("./Market.sol");
+var Tempo = require('@digix/tempo');
 
 contract('Market', function(accounts) {
+  it("should set start time on creation", function() {
+    var market;
+
+    return Market.new().then(function(instance) { market = instance }).
+      then(function() { return market.startTime.call(); }).
+      then(function(result) {
+        assert.notEqual(result, 0);
+      });
+  });
+
+  it("should close after 14 days", function() {
+    var market;
+
+    return new Tempo.default(web3).then((tempo) => {
+      return Market.new().then(function(instance) { market = instance }).
+        then(function() { return market.isOpen.call(); }).
+        then(function(result) {
+          assert.equal(result, true);
+        }).
+        then(function() { return tempo.waitForBlocks(1, 15*24*60*60) }).
+        then(function() { return market.isOpen.call(); }).
+        then(function(result) {
+          assert.equal(result, false);
+        });
+    });
+  });
+
+  it("should keep track of average for last 24 hours", function() {
+    var market;
+
+    return new Tempo.default(web3).then((tempo) => {
+      return Market.new().then(function(instance) { market = instance }).
+        then(function() { return market.sell(10, 50, {value: 500}) }).
+        then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+        then(function() { return tempo.waitForBlocks(1, 13*24*60*60 + 1) }).
+        then(function() { return market.sell(10, 50, {value: 500}) }).
+        then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+        then(function() { return market.buy(10, 60, {value: 600, from: accounts[1]}) }).
+        then(function() { return market.sell(10, 60, {value: 400}) }).
+        then(function() { return tempo.waitForBlocks(1, 1*24*60*60 + 1) }).
+        then(function() { return market.avgPrice.call() }).
+        then(function(result) {
+          assert.equal(result, 55);
+        });
+    });
+  });
+
   it("should allow new buy orders", function() {
     var market;
 
