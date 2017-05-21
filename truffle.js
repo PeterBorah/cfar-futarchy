@@ -4,7 +4,7 @@ module.exports = {
   build: new DefaultBuilder({
     "index.html": "index.html",
     "index.js": [
-      "index.js"
+      "abi.es6", "index.js"
     ],
     "index.css": [
       "index.css"
