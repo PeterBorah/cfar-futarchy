@@ -4,7 +4,8 @@
   "description": "Futarchy dapp for CFAR hackathon",
   "dependencies": {
     "@digix/tempo": "^0.0.3",
-    "truffle-default-builder": "^2.0.0"
+    "truffle-default-builder": "^2.0.0",
+    "web3": "^0.19.0"
   },
   "license": "UNLICENSED",
   "repository": {

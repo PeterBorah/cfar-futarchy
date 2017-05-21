@@ -211,11 +211,19 @@ let tabs = {
 
 			display.innerHTML = `
 				<div class="rowbox">
-					Add proposal: <input placeholder="proposal description"></input>
+					New Proposal: <input id="proposal-description" placeholder="proposal description"></input>
+					&nbsp;&nbsp;
+					<button id="add-proposal">Add</button>
 				</div>
 				Upcoming Proposals
 				${listHtml}
 			`;
+			let addProposal = document.getElementById("add-proposal");
+			addProposal.addEventListener("click", () => {
+				let desc = document.getElementById("proposal-description").value;
+				// do whatever you want with desc aka throw it into the function
+				smartcontract.createProposal(desc);
+			});
 		},
 		past: () => {
 			/*
