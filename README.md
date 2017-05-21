@@ -73,7 +73,6 @@ While blockchain voting platforms are areas for potential innovation, there curr
 
 
 ### Suggestions to calculate utility function
-*U*(*x*<sub>0</sub>, *x*<sub>1</sub>, ..., *x*<sub>n</sub>,) = \sum_{i=1}^{10} t_i
 ### Architecture
 #### Prediction market architecture
 #### System architecture 
