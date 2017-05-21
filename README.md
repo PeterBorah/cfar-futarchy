@@ -74,6 +74,26 @@ While blockchain voting platforms are areas for potential innovation, there curr
 
 ### Suggestions to calculate utility function
 
+In most cases, a polity's values will vary so widely across constituents and across situations that a composite utility function is pertinent.
+The most common method is a simple weighted summation of the marginal utilities.
+The composite utility function *U* over two or more relevant objectives, *x*<sub>i</sub>, can be written as
+
+*U*(*x*<sub>0</sub>, *x*<sub>1</sub>, ..., *x*<sub>n</sub>,) = Σ<sup>n</sup><sub>i=0</sub>*w*<sub>i</sub>*x*<sub>i</sub>
+
+where *w*<sub>i</sub> are weights.
+Weights should be considered carefully, with elements such as (1) inherent importance of the objective, (2) counterfactuals, and (3) marginal utility in mind.
+They should also have a limited range, say, 0-10.
+
+Needless to say, objectives should be measurable (e.g., house profit in dollars or ).
+Anti-objectives, metrics one wants to minimize, should be negated.
+Utility should be measured at the time of policy implementation and after the predetermined length of time, to gauge policy effect.
+
+Since Hanson's Hand displays utility in the 0-100 range, the translated utility *U'* can be written as
+
+*U'* = *U* * 100/(Σ<sup>n</sup><sub>i=0</sub>*W**x*<sub>i</sub>)
+
+where W is the maximum weight.
+
 ### Contract architecture
 
 There are four contracts in use in the system.
