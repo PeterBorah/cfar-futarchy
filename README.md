@@ -94,7 +94,7 @@ Since Hanson's Hand displays utility in the 0-100 range, the translated utility 
 
 where W is the maximum weight.
 
-There should be a separate time periods for (1) submitting objectives, (2) voting on objectives (which can be done through various mechanisms such as ranked voting or quadratic voting), and (3) voting on weights of approved objectives (take the average of each).
+There should be a separate time periods for (1) submitting objectives, (2) voting on objectives (which can be done through various mechanisms such as ranked voting or quadratic voting), and (3) voting on weights of approved objectives (take the average of each).  
 A trusted central authority or third party will need to facilitate the measurements and voting.
 
 ### Contract architecture
