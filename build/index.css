@@ -10,9 +10,20 @@ body {
 }
 
 button {
+	background-color: #fff;
 	border-color: #000;
 	border-radius: 2em;
 	border-style: solid;
+	user-select: none;
+}
+
+button:active {
+	background-color: #00f;
+	color: #fff;
+}
+
+button:hover {
+	border-color: #00f;
 }
 
 h1 {
@@ -27,6 +38,7 @@ input {
 	border-color: #000;
 	border-style: solid;
 	background-color: #fff;
+	font-family: monospace;
 	margin: 1em;
 }
 
@@ -35,6 +47,10 @@ input:active {
 }
 
 input:focus {
+	border-color: #00f;
+}
+
+input:hover {
 	border-color: #00f;
 }
 
@@ -124,5 +140,6 @@ input:focus {
 	flex-grow: 1;
 	max-width: 100vw;
 	padding: 2em;
+	text-align: center;
 }
 
