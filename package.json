@@ -1,12 +1,13 @@
 {
-    "name": "cfar-futarchy",
-    "version": "0.1.0",
-    "description": "Futarchy dapp for CFAR hackathon",
-    "dependencies": {
-        "@digix/tempo": "^0.0.3"
-    },
-    "license": "UNLICENSED",
-    "repository": {
-        "url": "https://github.com/peterborah/cfar-futarchy.git"
-    }
+  "name": "cfar-futarchy",
+  "version": "0.1.0",
+  "description": "Futarchy dapp for CFAR hackathon",
+  "dependencies": {
+    "@digix/tempo": "^0.0.3",
+    "truffle-default-builder": "^2.0.0"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "url": "https://github.com/peterborah/cfar-futarchy.git"
+  }
 }

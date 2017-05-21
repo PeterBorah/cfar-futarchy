@@ -4,10 +4,11 @@ contract Proposal {
     address posMarket;
     address negMarket;
     string desc;
-    function Proposal(string description) {
+
+    function Proposal(string description, address _oracle) {
         desc = description; 
-        posMarket = new Market();
-        negMarket = new Market();
+        posMarket = new Market(_oracle);
+        negMarket = new Market(_oracle);
     }
     function getposMarket() returns (address){
         return posMarket;

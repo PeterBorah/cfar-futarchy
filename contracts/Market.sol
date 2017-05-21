@@ -1,4 +1,5 @@
 pragma solidity ^0.4.8;
+import "./oracle.sol";
 
 contract Market {
   uint[] public buyAmounts;
@@ -8,16 +9,18 @@ contract Market {
   uint[] public sellPrices;
   address[] public sellOriginators;
   mapping(address => uint) public collateral;
-  mapping(address => int) public balance;
+  mapping(address => int) public balances;
   uint public startTime;
   uint lastDayCumulative;
   uint lastDayVolume;
   address public proposal;
   bool public canceled;
+  oracle public ourOracle;
 
-  function Market() {
+  function Market(address _oracle) {
     startTime = block.timestamp;
     proposal = msg.sender;
+    ourOracle = oracle(_oracle);
   }
 
   function isOpen() returns(bool) {
@@ -47,8 +50,8 @@ contract Market {
         sellOriginators.length--;
       }
 
-      balance[msg.sender] += int(matchedAmount);
-      balance[sellOriginator] -= int(matchedAmount);
+      balances[msg.sender] += int(matchedAmount);
+      balances[sellOriginator] -= int(matchedAmount);
 
       if (startTime + 13 days < block.timestamp) {
         lastDayVolume += matchedAmount;
@@ -92,8 +95,8 @@ contract Market {
         lastDayCumulative += matchedAmount * price;
       }
 
-      balance[msg.sender] -= int(matchedAmount);
-      balance[buyOriginator] += int(matchedAmount);
+      balances[msg.sender] -= int(matchedAmount);
+      balances[buyOriginator] += int(matchedAmount);
     }
 
     if (amount > 0) {
@@ -123,6 +126,30 @@ contract Market {
     if (isOpen()) { throw;}
 
     return lastDayCumulative/lastDayVolume;
+  }
+
+  function withdraw() {
+    if (canceled) {
+      if (msg.sender.send(collateral[msg.sender])) {
+        collateral[msg.sender] = 0;
+      }
+    } else if (block.timestamp > startTime + 90 days) {
+      int result = int(ourOracle.getUtility());
+      if (balances[msg.sender] > 0) {
+        if (msg.sender.send(uint(balances[msg.sender] * result))) {
+          balances[msg.sender] = 0;
+        }
+      }
+      else {
+        if (msg.sender.send(uint((0 - balances[msg.sender]) * (100 - result)))) {
+          balances[msg.sender] = 0;
+        }
+      }
+    }
+  }
+
+  function collateralBalance() returns(uint) {
+    return this.balance;
   }
 
   // Private functions

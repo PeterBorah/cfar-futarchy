@@ -4,9 +4,15 @@ contract dao{
     uint count = 0;
     address[] proposals;
     mapping(string => address) descs;
+    address public oracle;
+    
+    function dao(address _oracle) {
+      oracle = _oracle;
+    }
+
     function createProposal(string description) returns (address){
         count = count +1;
-        address toReturn = address(new Proposal(description));
+        address toReturn = address(new Proposal(description, oracle));
         proposals.push(toReturn);
         descs[description] = toReturn;
         return toReturn;

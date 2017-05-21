@@ -1,5 +1,6 @@
-var Market = artifacts.require("./Market.sol");
+var Market = artifacts.require("Market.sol");
 var Tempo = require('@digix/tempo');
+var Oracle = artifacts.require("oracle.sol");
 
 contract('Market', function(accounts) {
   it("should set start time on creation", function() {
@@ -25,6 +26,75 @@ contract('Market', function(accounts) {
         then(function() { return market.isOpen.call(); }).
         then(function(result) {
           assert.equal(result, false);
+        });
+    });
+  });
+
+  it("should allow withdrawal of collateral if cancelled", function() {
+    var market;
+
+    return new Tempo.default(web3).then((tempo) => {
+      return Market.new().then(function(instance) { market = instance }).
+        then(function() { return market.sell(10, 50, {value: 500}) }).
+        then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+        then(function() { return tempo.waitForBlocks(1, 15*24*60*60) }).
+        then(function() { return market.cancel(); }).
+        then(function() { return market.withdraw(); }).
+        then(function() { return market.collateral.call(accounts[0]) }).
+        then(function(result) {
+          assert.equal(result, 0);
+        }).
+        then(function() { return market.collateralBalance.call(); }).
+        then(function(result) {
+          assert.equal(result, 500);
+        });
+    });
+  });
+
+  it("should allow withdrawal of buy winnings after 90 days", function() {
+    var market;
+    var oracle;
+
+    return new Tempo.default(web3).then((tempo) => {
+      return Oracle.new(70).
+        then(function(result) { oracle = result }).
+        then(function() { return Market.new(oracle.address) }).
+        then(function(instance) { market = instance }).
+        then(function() { return market.sell(10, 50, {value: 500}) }).
+        then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+        then(function() { return tempo.waitForBlocks(1, 91*24*60*60) }).
+        then(function() { return market.withdraw(); }).
+        then(function() { return market.balances.call(accounts[0]) }).
+        then(function(result) {
+          assert.equal(result, 0);
+        }).
+        then(function() { return market.collateralBalance.call(); }).
+        then(function(result) {
+          assert.equal(result, 700);
+        });
+    });
+  });
+
+  it("should allow withdrawal of sell winnings after 90 days", function() {
+    var market;
+    var oracle;
+
+    return new Tempo.default(web3).then((tempo) => {
+      return Oracle.new(70).
+        then(function(result) { oracle = result }).
+        then(function() { return Market.new(oracle.address) }).
+        then(function(instance) { market = instance }).
+        then(function() { return market.sell(10, 50, {value: 500}) }).
+        then(function() { return market.buy(10, 50, {value: 500, from: accounts[1]}) }).
+        then(function() { return tempo.waitForBlocks(1, 91*24*60*60) }).
+        then(function() { return market.withdraw({from: accounts[1]}); }).
+        then(function() { return market.balances.call(accounts[1]) }).
+        then(function(result) {
+          assert.equal(result, 0);
+        }).
+        then(function() { return market.collateralBalance.call(); }).
+        then(function(result) {
+          assert.equal(result, 300);
         });
     });
   });
@@ -131,11 +201,11 @@ contract('Market', function(accounts) {
       then(function(result) {
         assert.equal(result[0].length, 0);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, -10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, 10);
       });
@@ -156,11 +226,11 @@ contract('Market', function(accounts) {
         assert.equal(result[0].length, 1);
         assert.equal(result[0][0], 90);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, -10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, 10);
       });
@@ -181,11 +251,11 @@ contract('Market', function(accounts) {
       then(function(result) {
         assert.equal(result[0].length, 0);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, -10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, 10);
       });
@@ -208,11 +278,11 @@ contract('Market', function(accounts) {
         assert.equal(result[0].length, 1);
         assert.equal(result[0][0], 5);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, -5);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, 5);
       });
@@ -298,11 +368,11 @@ contract('Market', function(accounts) {
       then(function(result) {
         assert.equal(result[0].length, 0);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, 10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, -10);
       });
@@ -323,11 +393,11 @@ contract('Market', function(accounts) {
         assert.equal(result[0].length, 1);
         assert.equal(result[0][0], 90);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, 10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, -10);
       });
@@ -348,11 +418,11 @@ contract('Market', function(accounts) {
       then(function(result) {
         assert.equal(result[0].length, 0);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, 10);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, -10);
       });
@@ -375,11 +445,11 @@ contract('Market', function(accounts) {
         assert.equal(result[0].length, 1);
         assert.equal(result[0][0], 5);
       }).
-      then(function() { return market.balance(accounts[0]) }).
+      then(function() { return market.balances(accounts[0]) }).
       then(function(result) {
         assert.equal(result, 5);
       }).
-      then(function() { return market.balance(accounts[1]) }).
+      then(function() { return market.balances(accounts[1]) }).
       then(function(result) {
         assert.equal(result, -5);
       });

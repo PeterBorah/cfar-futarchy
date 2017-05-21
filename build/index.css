@@ -1,0 +1,128 @@
+
+
+/* run through an automatic polyfiller if you care about people who insist on using inferior browsers getting the full experience */
+
+body {
+	display: flex;
+	font-family: monospace;
+	margin: 0;
+	min-height: 100vh;
+}
+
+button {
+	border-color: #000;
+	border-radius: 2em;
+	border-style: solid;
+}
+
+h1 {
+	margin: 0;
+}
+
+h3 {
+	margin: 0;
+}
+
+input {
+	border-color: #000;
+	border-style: solid;
+	background-color: #fff;
+	margin: 1em;
+}
+
+input:active {
+	border-color: #00f;
+}
+
+input:focus {
+	border-color: #00f;
+}
+
+.colbox {
+	align-items: center;
+	border-color: #000;
+	border-style: solid;
+	border-width: 2px;
+	display: flex;
+	flex-direction: column;
+	margin: 1em;
+	padding: 1em;
+}
+
+.listable {
+	border-color: #000;
+	border-radius: 2em;
+	border-style: solid;
+	border-width: 2px;
+	margin: 1em;
+	padding: 1em;
+
+}
+
+.rowbox {
+	align-items: center;
+	border-color: #000;
+	border-style: solid;
+	border-width: 2px;
+	display: flex;
+	flex-direction: row;
+	margin: 1em;
+	padding: 1em;
+}
+
+.selected {
+	background-color: #bbf;
+}
+
+.strife {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%
+}
+
+.strifeBar {
+	border-color: #000;
+	border-style: solid;
+	border-width: 2px;
+	height: 3em;
+	margin: 2em;
+	width: 75%;
+}
+
+.tab {
+	border-color: #000;
+	border-radius: 2em;
+	border-style: solid;
+	border-width: 2px;
+	cursor: pointer;
+	margin: 1em;
+	padding: 1em;
+	user-select: none; /* spotty support as of 2017-5 */
+}
+
+.tab:active {
+	background-color: #00f;
+	color: #fff;
+}
+
+.tab:hover {
+	border-color: #00f;
+}	
+
+#tabs {
+	border-color: #000;
+	border-style: none solid none none;
+	width: 24em;
+}
+
+#current-tab {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	max-width: 100vw;
+	padding: 2em;
+}
+
