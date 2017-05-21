@@ -210,6 +210,9 @@ let tabs = {
 			listHtml += `</div>`;
 
 			display.innerHTML = `
+				<div class="rowbox">
+					Add proposal: <input placeholder="proposal description"></input>
+				</div>
 				Upcoming Proposals
 				${listHtml}
 			`;
